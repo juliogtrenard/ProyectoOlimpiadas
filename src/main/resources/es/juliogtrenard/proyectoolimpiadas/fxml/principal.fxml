@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="es.juliogtrenard.proyectoolimpiadas.controladores.ControladorPrincipal">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<VBox alignment="CENTER" maxHeight="600" maxWidth="800" minHeight="500" minWidth="700" prefHeight="600" prefWidth="800" spacing="15.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.juliogtrenard.proyectoolimpiadas.controladores.ControladorPrincipal">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+    <Label text="OLIMPIADAS">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </Label>
+
+    <ComboBox fx:id="tablaComboBox" prefWidth="200" promptText="Selecciona una tabla" />
+
+    <TextField fx:id="filtroTextField" alignment="CENTER" prefHeight="26.0" prefWidth="554.0" promptText="Filtro por nombre" />
+
+    <TableView fx:id="tablaTableView" prefHeight="400" prefWidth="700" />
+
+    <Button fx:id="anadirButton" prefWidth="100" text="Añadir" />
+   <padding>
+      <Insets left="30.0" right="30.0" />
+   </padding>
+
 </VBox>

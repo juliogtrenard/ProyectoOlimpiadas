@@ -11,9 +11,11 @@ public class Olimpiadas extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/principal.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Gestión de olimpiadas.");
         stage.setScene(scene);
+        stage.setMinWidth(700);
+        stage.setMinHeight(500);
         stage.show();
     }
 
