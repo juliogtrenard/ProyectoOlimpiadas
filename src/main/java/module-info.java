@@ -10,4 +10,6 @@ module es.juliogtrenard.proyectoolimpiadas {
     opens es.juliogtrenard.proyectoolimpiadas.controladores to javafx.fxml;
     exports es.juliogtrenard.proyectoolimpiadas.lenguaje;
     opens es.juliogtrenard.proyectoolimpiadas.lenguaje to javafx.fxml;
+    exports es.juliogtrenard.proyectoolimpiadas.modelos;
+    exports es.juliogtrenard.proyectoolimpiadas.dao;
 }

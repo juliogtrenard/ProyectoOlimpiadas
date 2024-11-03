@@ -56,15 +56,8 @@
                <Font size="16.0" />
             </font>
          </Label>
-           <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0">
-               <columns>
-                   <TableColumn fx:id="colNombre" editable="false" prefWidth="300.0" text="%label.nombre" />
-                   <TableColumn fx:id="colSexo" editable="false" minWidth="0.0" prefWidth="106.4000244140625" text="%label.sexo" />
-                   <TableColumn fx:id="colPeso" editable="false" minWidth="0.0" prefWidth="131.99996948242188" text="%label.peso" />
-                   <TableColumn fx:id="colAltura" prefWidth="136.0" text="%label.altura" />
-               </columns>
-           </TableView>
-           <Button mnemonicParsing="false" text="%btnAniadir" />
+           <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" />
+           <Button mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir" />
        </VBox>
    </center>
 </BorderPane>
