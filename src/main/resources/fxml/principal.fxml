@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="700" maxWidth="900" minHeight="500" minWidth="700" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.juliogtrenard.proyectoolimpiadas.controladores.ControladorPrincipal">
+   <top>
+       <MenuBar BorderPane.alignment="CENTER">
+           <Menu mnemonicParsing="false" text="%label.equipos">
+               <MenuItem fx:id="menAniadirEquipo" mnemonicParsing="false" onAction="#aniadirEquipo" text="%label.btnAniadir" />
+               <MenuItem fx:id="menModificarEquipo" mnemonicParsing="false" onAction="#modificarEquipo" text="%label.btnModificar" />
+               <MenuItem fx:id="menEliminarEquipo" mnemonicParsing="false" onAction="#eliminarEquipo" text="%label.btnEliminar" />
+           </Menu>
+           <Menu mnemonicParsing="false" text="%label.deportes">
+               <MenuItem fx:id="menAniadirDeporte" mnemonicParsing="false" onAction="#aniadirDeporte" text="%label.btnAniadir" />
+               <MenuItem fx:id="menModificarDeporte" mnemonicParsing="false" onAction="#modificarDeporte" text="%label.btnModificar" />
+               <MenuItem fx:id="menEliminarDeporte" mnemonicParsing="false" onAction="#eliminarDeporte" text="%label.btnEliminar" />
+           </Menu>
+           <Menu mnemonicParsing="false" text="%label.olimpiadas">
+               <MenuItem fx:id="menAniadirOlimpiada" mnemonicParsing="false" onAction="#aniadirOlimpiada" text="%label.btnAniadir" />
+               <MenuItem fx:id="menModificarOlimpiada" mnemonicParsing="false" onAction="#modificarOlimpiada" text="%label.btnModificar" />
+               <MenuItem fx:id="menEliminarOlimpiada" mnemonicParsing="false" onAction="#eliminarOlimpiada" text="%label.btnEliminar" />
+           </Menu>
+           <Menu mnemonicParsing="false" text="%label.eventos">
+               <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" onAction="#aniadirEvento" text="%label.btnAniadir" />
+               <MenuItem fx:id="menModificarEvento" mnemonicParsing="false" onAction="#modificarEvento" text="%label.btnModificar" />
+               <MenuItem fx:id="menEliminarEvento" mnemonicParsing="false" onAction="#eliminarEvento" text="%label.btnEliminar" />
+           </Menu>
+           <Menu mnemonicParsing="false" text="%app.ayuda">
+               <Menu mnemonicParsing="false" text="%app.lenguaje">
+                   <RadioMenuItem fx:id="langES" mnemonicParsing="false" text="%app.lenguaje.espaniol">
+                       <toggleGroup>
+                           <ToggleGroup fx:id="tgIdioma" />
+                       </toggleGroup>
+                   </RadioMenuItem>
+                   <RadioMenuItem fx:id="langEN" mnemonicParsing="false" text="%app.lenguaje.ingles" toggleGroup="$tgIdioma" />
+               </Menu>
+           </Menu>
+       </MenuBar>
+   </top>
+   <center>
+       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="35.0" BorderPane.alignment="CENTER">
+           <padding>
+               <Insets left="20.0" right="20.0" />
+           </padding>
+           <Label text="%titulo">
+              <font>
+                  <Font size="24.0" />
+              </font>
+           </Label>
+           <TextField fx:id="filtroNombre" alignment="CENTER" promptText="%filtrar" />
+         <Label text="%deportistas">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+           <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0">
+               <columns>
+                   <TableColumn fx:id="colNombre" editable="false" prefWidth="300.0" text="%label.nombre" />
+                   <TableColumn fx:id="colSexo" editable="false" minWidth="0.0" prefWidth="106.4000244140625" text="%label.sexo" />
+                   <TableColumn fx:id="colPeso" editable="false" minWidth="0.0" prefWidth="131.99996948242188" text="%label.peso" />
+                   <TableColumn fx:id="colAltura" prefWidth="136.0" text="%label.altura" />
+               </columns>
+           </TableView>
+           <Button mnemonicParsing="false" text="%btnAniadir" />
+       </VBox>
+   </center>
+</BorderPane>
