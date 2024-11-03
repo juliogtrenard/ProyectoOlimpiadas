@@ -58,6 +58,7 @@
          </Label>
            <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" />
            <Button mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir" />
+            <Button mnemonicParsing="false" text="%btnEliminar" onAction="#eliminarDeportista" />
        </VBox>
    </center>
 </BorderPane>

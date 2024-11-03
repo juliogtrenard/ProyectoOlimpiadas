@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -166,6 +165,33 @@ public class ControladorPrincipal implements Initializable {
             System.out.println(e.getMessage());
             alerta(resources.getString("error.ventana"));
         }
+    }
+
+    /**
+     * Eliminar un deportista.
+     *
+     * @param event El evento del metodo
+     */
+    @FXML
+    void eliminarDeportista(ActionEvent event) {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setHeaderText(null);
+
+        if(tabla.getSelectionModel().getSelectedItem() != null) {
+            alerta.setContentText((resources.getString("eliminar.confirmar")));
+            alerta.showAndWait();
+            if(alerta.getResult().getButtonData().name().equals("OK_DONE")) {
+                DaoDeportista.eliminar((Deportista) tabla.getSelectionModel().getSelectedItem());
+                cargarDeportistas();
+                tabla.refresh();
+            }
+        } else {
+            alerta.setAlertType(Alert.AlertType.ERROR);
+            alerta.setContentText((resources.getString("eliminar.error")));
+            alerta.showAndWait();
+        }
+
+        tabla.getSelectionModel().clearSelection();
     }
 
     /**
