@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.juliogtrenard.proyectoolimpiadas.controladores.ControladorOlimpiada">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <ComboBox fx:id="cbOlimpiada" prefWidth="150.0" />
+    <GridPane prefWidth="481.0" vgap="20.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <Label text="%label.nombre" GridPane.halignment="RIGHT">
+            <GridPane.margin>
+                <Insets />
+            </GridPane.margin>
+            <padding>
+                <Insets right="5.0" />
+            </padding>
+        </Label>
+        <TextField fx:id="txtNombre" GridPane.columnIndex="1" />
+        <Label text="%label.anio" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <padding>
+                <Insets right="5.0" />
+            </padding>
+        </Label>
+        <TextField fx:id="txtAnio" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="%label.temporada" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <padding>
+                <Insets right="5.0" />
+            </padding>
+        </Label>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <RadioButton fx:id="rbInvierno" mnemonicParsing="false" text="%olimpiada.temporada.invierno">
+            <toggleGroup>
+               <ToggleGroup fx:id="tgTemporada" />
+            </toggleGroup></RadioButton>
+            <RadioButton fx:id="rbVerano" mnemonicParsing="false" text="%olimpiada.temporada.verano" toggleGroup="$tgTemporada" />
+        </HBox>
+        <Label text="%olimpiada.ciudad" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <padding>
+                <Insets right="5.0" />
+            </padding>
+        </Label>
+        <TextField fx:id="txtCiudad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    </GridPane>
+    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="50.0">
+        <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" text="%label.guardar" />
+        <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" text="%label.btnEliminar" />
+        <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" text="%label.cancelar" />
+    </HBox>
+</VBox>
