@@ -153,5 +153,34 @@ public class DaoEquipo {
             return false;
         }
     }
+
+    /**
+     * Busca un equipo por su id
+     *
+     * @param id ID del equipo a buscar
+     * @return equipo o null
+     */
+    public static Equipo getEquipo(int id) {
+        DBConnect connection;
+        Equipo equipo = null;
+        try {
+            connection = new DBConnect();
+            String consulta = "SELECT id_equipo,nombre,iniciales FROM Equipo WHERE id_equipo = ?";
+            PreparedStatement pstmt = connection.getConnection().prepareStatement(consulta);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id_equipo = rs.getInt("id_equipo");
+                String nombre = rs.getString("nombre");
+                String iniciales = rs.getString("iniciales");
+                equipo = new Equipo(id_equipo,nombre,iniciales);
+            }
+            rs.close();
+            connection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return equipo;
+    }
 }
 

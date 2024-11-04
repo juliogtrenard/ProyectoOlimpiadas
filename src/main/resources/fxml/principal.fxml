@@ -20,6 +20,9 @@
            <Menu mnemonicParsing="false" text="%label.eventos">
                <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" onAction="#eventos" text="%label.opciones" />
            </Menu>
+           <Menu mnemonicParsing="false" text="%label.participaciones">
+               <MenuItem fx:id="menAniadirParticipacion" mnemonicParsing="false" onAction="#participaciones" text="%label.opciones"/>
+           </Menu>
            <Menu mnemonicParsing="false" text="%app.ayuda">
                <Menu mnemonicParsing="false" text="%app.lenguaje">
                    <RadioMenuItem fx:id="langES" mnemonicParsing="false" text="%app.lenguaje.espaniol">
