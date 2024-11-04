@@ -1,12 +1,8 @@
 package es.juliogtrenard.proyectoolimpiadas.controladores;
 
-import es.juliogtrenard.proyectoolimpiadas.dao.DaoDeportista;
-import es.juliogtrenard.proyectoolimpiadas.dao.DaoEvento;
-import es.juliogtrenard.proyectoolimpiadas.dao.DaoParticipacion;
+import es.juliogtrenard.proyectoolimpiadas.dao.*;
 import es.juliogtrenard.proyectoolimpiadas.lenguaje.LenguajeSwitcher;
-import es.juliogtrenard.proyectoolimpiadas.modelos.Deportista;
-import es.juliogtrenard.proyectoolimpiadas.modelos.Evento;
-import es.juliogtrenard.proyectoolimpiadas.modelos.Participacion;
+import es.juliogtrenard.proyectoolimpiadas.modelos.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -170,7 +166,99 @@ public class ControladorPrincipal implements Initializable {
             cargarParticipaciones();
         });
 
+        tEquipos.setOnAction(_ -> {
+            controladorTabla = "equipos";
+            lblTitulo.setText(resources.getString("titulo.tabla.equipos"));
+            cargarEquipos();
+        });
+
+        tDeportes.setOnAction(_ -> {
+            controladorTabla = "deportes";
+            lblTitulo.setText(resources.getString("titulo.tabla.deportes"));
+            cargarDeportes();
+        });
+
+        tOlimpiadas.setOnAction(_ -> {
+            controladorTabla = "olimpiadas";
+            lblTitulo.setText(resources.getString("titulo.tabla.olimpiadas"));
+            cargarOlimpiadas();
+        });
+
         cargarDeportistas();
+    }
+
+    /**
+     * Agrega en la tabla las columnas de las olimpiadas
+     */
+    private void cargarOlimpiadas() {
+        tabla.getSelectionModel().clearSelection();
+        filtroNombre.setText(null);
+        masterData.clear();
+        filteredData.clear();
+        tabla.getItems().clear();
+        tabla.getColumns().clear();
+
+        TableColumn<Olimpiada, Integer> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory("id_olimpiada"));
+        TableColumn<Olimpiada, String> colNombre = new TableColumn<>(resources.getString("tabla.olimpiada.nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        TableColumn<Olimpiada, Integer> colAnio = new TableColumn<>(resources.getString("tabla.olimpiada.anio"));
+        colAnio.setCellValueFactory(new PropertyValueFactory("anio"));
+        TableColumn<Olimpiada, String> colTemporada = new TableColumn<>(resources.getString("tabla.olimpiada.temporada"));
+        colTemporada.setCellValueFactory(new PropertyValueFactory("temporada"));
+        TableColumn<Olimpiada, String> colCiudad = new TableColumn<>(resources.getString("tabla.olimpiada.ciudad"));
+        colCiudad.setCellValueFactory(new PropertyValueFactory("ciudad"));
+        tabla.getColumns().addAll(colId,colNombre,colAnio,colTemporada,colCiudad);
+
+        ObservableList<Olimpiada> olimpiadas = DaoOlimpiada.cargarListado();
+        masterData.addAll(olimpiadas);
+        tabla.setItems(olimpiadas);
+    }
+
+    /**
+     * Agrega en la tabla las columnas de los deportes
+     */
+    private void cargarDeportes() {
+        tabla.getSelectionModel().clearSelection();
+        filtroNombre.setText(null);
+        masterData.clear();
+        filteredData.clear();
+        tabla.getItems().clear();
+        tabla.getColumns().clear();
+
+        TableColumn<Deporte, Integer> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory("id_deporte"));
+        TableColumn<Deporte, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        tabla.getColumns().addAll(colId,colNombre);
+
+        ObservableList<Deporte> deportes = DaoDeporte.cargarListado();
+        masterData.setAll(deportes);
+        tabla.setItems(deportes);
+    }
+
+    /**
+     * Agrega en la tabla las columnas de los equipos
+     */
+    private void cargarEquipos() {
+        tabla.getSelectionModel().clearSelection();
+        filtroNombre.setText(null);
+        masterData.clear();
+        filteredData.clear();
+        tabla.getItems().clear();
+        tabla.getColumns().clear();
+
+        TableColumn<Equipo, Integer> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory("id_equipo"));
+        TableColumn<Equipo, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        TableColumn<Equipo, String> colIniciales = new TableColumn<>(resources.getString("label.iniciales"));
+        colIniciales.setCellValueFactory(new PropertyValueFactory("iniciales"));
+        tabla.getColumns().addAll(colId,colNombre,colIniciales);
+
+        ObservableList<Equipo> equipos = DaoEquipo.cargarListado();
+        masterData.setAll(equipos);
+        tabla.setItems(equipos);
     }
 
     /**
@@ -339,6 +427,18 @@ public class ControladorPrincipal implements Initializable {
                 participaciones(actionEvent);
                 cargarParticipaciones();
                 break;
+            case "olimpiadas":
+                olimpiadas(actionEvent);
+                cargarOlimpiadas();
+                break;
+            case "deportes":
+                deportes(actionEvent);
+                cargarDeportes();
+                break;
+            case "equipos":
+                equipos(actionEvent);
+                cargarEquipos();
+                break;
         }
     }
 
@@ -370,6 +470,21 @@ public class ControladorPrincipal implements Initializable {
                     case "participaciones":
                         DaoParticipacion.eliminar((Participacion) tabla.getSelectionModel().getSelectedItem());
                         cargarParticipaciones();
+                        tabla.refresh();
+                        break;
+                    case "olimpiadas":
+                        DaoOlimpiada.eliminar((Olimpiada) tabla.getSelectionModel().getSelectedItem());
+                        cargarOlimpiadas();
+                        tabla.refresh();
+                        break;
+                    case "deportes":
+                        DaoDeporte.eliminar((Deporte) tabla.getSelectionModel().getSelectedItem());
+                        cargarDeportes();
+                        tabla.refresh();
+                        break;
+                    case "equipos":
+                        DaoEquipo.eliminar((Equipo) tabla.getSelectionModel().getSelectedItem());
+                        cargarEquipos();
                         tabla.refresh();
                         break;
                 }
@@ -418,7 +533,6 @@ public class ControladorPrincipal implements Initializable {
     private void cargarEventos() {
         tabla.getSelectionModel().clearSelection();
         filtroNombre.setText(null);
-        filtroNombre.setDisable(true);
         masterData.clear();
         filteredData.clear();
         tabla.getItems().clear();
@@ -514,6 +628,15 @@ public class ControladorPrincipal implements Initializable {
                 tabla.setItems(masterData);
             } else {
                 filteredData.clear();
+                elegirFiltro(valor);
+                tabla.setItems(filteredData);
+            }
+        }
+    }
+
+    private void elegirFiltro(String valor) {
+        switch(controladorTabla) {
+            case "deportistas":
                 for (Object obj : masterData) {
                     Deportista deportista = (Deportista) obj;
                     String nombre = deportista.getNombre();
@@ -522,8 +645,47 @@ public class ControladorPrincipal implements Initializable {
                         filteredData.add(deportista);
                     }
                 }
-                tabla.setItems(filteredData);
-            }
+                break;
+            case "eventos":
+                for (Object obj : masterData) {
+                    Evento evento = (Evento) obj;
+                    String nombre = evento.getNombre();
+                    nombre = nombre.toLowerCase();
+                    if (nombre.contains(valor)) {
+                        filteredData.add(evento);
+                    }
+                }
+                break;
+            case "olimpiadas":
+                for (Object obj : masterData) {
+                    Olimpiada olimpiada = (Olimpiada) obj;
+                    String nombre = olimpiada.getNombre();
+                    nombre = nombre.toLowerCase();
+                    if (nombre.contains(valor)) {
+                        filteredData.add(olimpiada);
+                    }
+                }
+                break;
+            case "deportes":
+                for (Object obj : masterData) {
+                    Deporte deporte = (Deporte) obj;
+                    String nombre = deporte.getNombre();
+                    nombre = nombre.toLowerCase();
+                    if (nombre.contains(valor)) {
+                        filteredData.add(deporte);
+                    }
+                }
+                break;
+            case "equipos":
+                for (Object obj : masterData) {
+                    Equipo equipo = (Equipo) obj;
+                    String nombre = equipo.getNombre();
+                    nombre = nombre.toLowerCase();
+                    if (nombre.contains(valor)) {
+                        filteredData.add(equipo);
+                    }
+                }
+                break;
         }
     }
 
