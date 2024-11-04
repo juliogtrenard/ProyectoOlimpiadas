@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -65,11 +66,14 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     private ResourceBundle resources;
 
+    /**
+     * Guardar los datos con los que se trabaja
+     */
     private ObservableList masterData = FXCollections.observableArrayList();
     private ObservableList filteredData = FXCollections.observableArrayList();
 
     /**
-     * Se ejecuta cuando se inicia la apliación
+     * Se ejecuta cuando se inicia la aplicación
      *
      * @param url
      * @param resourceBundle
@@ -105,40 +109,28 @@ public class ControladorPrincipal implements Initializable {
         cargarDeportistas();
     }
 
-    public void aniadirDeporte(ActionEvent actionEvent) {
-    }
-
-    public void modificarDeporte(ActionEvent actionEvent) {
-    }
-
-    public void eliminarDeporte(ActionEvent actionEvent) {
-    }
-
-    public void aniadirOlimpiada(ActionEvent actionEvent) {
-    }
-
-    public void modificarOlimpiada(ActionEvent actionEvent) {
-    }
-
-    public void eliminarOlimpiada(ActionEvent actionEvent) {
-    }
-
-    public void aniadirEvento(ActionEvent actionEvent) {
-    }
-
-    public void modificarEvento(ActionEvent actionEvent) {
-    }
-
-    public void eliminarEvento(ActionEvent actionEvent) {
-    }
-
-    public void aniadirEquipo(ActionEvent actionEvent) {
-    }
-
-    public void modificarEquipo(ActionEvent actionEvent) {
-    }
-
-    public void eliminarEquipo(ActionEvent actionEvent) {
+    /**
+     * Abre la ventana de equipos
+     *
+     * @param event
+     */
+    @FXML
+    void equipos(ActionEvent event) {
+        try {
+            Window ventana = tabla.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/equipo.fxml"),resources);
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle(resources.getString("app.nombre"));
+            stage.initOwner(ventana);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            alerta(resources.getString("error.ventana"));
+        }
     }
 
     /**

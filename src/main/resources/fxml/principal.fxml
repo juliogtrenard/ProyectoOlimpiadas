@@ -9,24 +9,16 @@
    <top>
        <MenuBar BorderPane.alignment="CENTER">
            <Menu mnemonicParsing="false" text="%label.equipos">
-               <MenuItem fx:id="menAniadirEquipo" mnemonicParsing="false" onAction="#aniadirEquipo" text="%label.btnAniadir" />
-               <MenuItem fx:id="menModificarEquipo" mnemonicParsing="false" onAction="#modificarEquipo" text="%label.btnModificar" />
-               <MenuItem fx:id="menEliminarEquipo" mnemonicParsing="false" onAction="#eliminarEquipo" text="%label.btnEliminar" />
+               <MenuItem fx:id="menAniadirEquipo" mnemonicParsing="false" onAction="#equipos" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.deportes">
-               <MenuItem fx:id="menAniadirDeporte" mnemonicParsing="false" onAction="#aniadirDeporte" text="%label.btnAniadir" />
-               <MenuItem fx:id="menModificarDeporte" mnemonicParsing="false" onAction="#modificarDeporte" text="%label.btnModificar" />
-               <MenuItem fx:id="menEliminarDeporte" mnemonicParsing="false" onAction="#eliminarDeporte" text="%label.btnEliminar" />
+               <MenuItem fx:id="menAniadirDeporte" mnemonicParsing="false" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.olimpiadas">
-               <MenuItem fx:id="menAniadirOlimpiada" mnemonicParsing="false" onAction="#aniadirOlimpiada" text="%label.btnAniadir" />
-               <MenuItem fx:id="menModificarOlimpiada" mnemonicParsing="false" onAction="#modificarOlimpiada" text="%label.btnModificar" />
-               <MenuItem fx:id="menEliminarOlimpiada" mnemonicParsing="false" onAction="#eliminarOlimpiada" text="%label.btnEliminar" />
+               <MenuItem fx:id="menAniadirOlimpiada" mnemonicParsing="false" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.eventos">
-               <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" onAction="#aniadirEvento" text="%label.btnAniadir" />
-               <MenuItem fx:id="menModificarEvento" mnemonicParsing="false" onAction="#modificarEvento" text="%label.btnModificar" />
-               <MenuItem fx:id="menEliminarEvento" mnemonicParsing="false" onAction="#eliminarEvento" text="%label.btnEliminar" />
+               <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%app.ayuda">
                <Menu mnemonicParsing="false" text="%app.lenguaje">
