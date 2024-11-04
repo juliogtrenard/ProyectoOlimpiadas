@@ -57,8 +57,13 @@
             </font>
          </Label>
            <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" />
-           <Button mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir" />
-            <Button mnemonicParsing="false" text="%btnEliminar" onAction="#eliminarDeportista" />
+           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <Button mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin></Button>
+               <Button mnemonicParsing="false" onAction="#eliminarDeportista" text="%btnEliminar" />
+           </HBox>
        </VBox>
    </center>
 </BorderPane>
