@@ -105,18 +105,6 @@ public class ControladorPrincipal implements Initializable {
     private Label lblTitulo;
 
     /**
-     * Boton para añadir
-     */
-    @FXML
-    private Button btnAniadir;
-
-    /**
-     * Boton para eliminar
-     */
-    @FXML
-    private Button btnEliminar;
-
-    /**
      * ResourceBundle de la aplicación
      */
     @FXML
@@ -168,27 +156,48 @@ public class ControladorPrincipal implements Initializable {
             controladorTabla = "deportistas";
             lblTitulo.setText(resources.getString("titulo.tabla.deportistas"));
             cargarDeportistas();
-            btnAniadir.setVisible(true);
-            btnEliminar.setVisible(true);
         });
 
         tEventos.setOnAction(_ -> {
             controladorTabla = "eventos";
             lblTitulo.setText(resources.getString("titulo.tabla.eventos"));
             cargarEventos();
-            btnAniadir.setVisible(false);
-            btnEliminar.setVisible(false);
         });
 
         tParticipaciones.setOnAction(_ -> {
             controladorTabla = "participaciones";
             lblTitulo.setText(resources.getString("titulo.tabla.participaciones"));
             cargarParticipaciones();
-            btnAniadir.setVisible(false);
-            btnEliminar.setVisible(false);
         });
 
         cargarDeportistas();
+    }
+
+    /**
+     * Abre la ventana de deportistas
+     *
+     * @param event
+     */
+    @FXML
+    void deportistas(ActionEvent event) {
+        try {
+            Window ventana = tabla.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/deportista.fxml"),resources);
+            ControladorDeportista controlador = new ControladorDeportista();
+            fxmlLoader.setController(controlador);
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle(resources.getString("app.nombre"));
+            stage.initOwner(ventana);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            cargarDeportistas();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            alerta(resources.getString("error.ventana"));
+        }
     }
 
     /**
@@ -312,38 +321,34 @@ public class ControladorPrincipal implements Initializable {
     }
 
     /**
-     * Añadir un deportista
+     * Añadir datos a una tabla
      * @param actionEvent El evento de la acción
      */
     @FXML
-    public void aniadirDeportista(ActionEvent actionEvent) {
-        try {
-            Window ventana = tabla.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/deportista.fxml"),resources);
-            ControladorDeportista controlador = new ControladorDeportista();
-            fxmlLoader.setController(controlador);
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.setTitle(resources.getString("app.nombre"));
-            stage.initOwner(ventana);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            cargarDeportistas();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            alerta(resources.getString("error.ventana"));
+    public void aniadir(ActionEvent actionEvent) {
+        switch(controladorTabla) {
+            case "deportistas":
+                deportistas(actionEvent);
+                cargarDeportistas();
+                break;
+            case "eventos":
+                eventos(actionEvent);
+                cargarEventos();
+                break;
+            case "participaciones":
+                participaciones(actionEvent);
+                cargarParticipaciones();
+                break;
         }
     }
 
     /**
-     * Eliminar un deportista.
+     * Eliminar datos de una tabla
      *
      * @param event El evento del metodo
      */
     @FXML
-    void eliminarDeportista(ActionEvent event) {
+    void eliminar(ActionEvent event) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setHeaderText(null);
 
@@ -351,9 +356,23 @@ public class ControladorPrincipal implements Initializable {
             alerta.setContentText((resources.getString("eliminar.confirmar")));
             alerta.showAndWait();
             if(alerta.getResult().getButtonData().name().equals("OK_DONE")) {
-                DaoDeportista.eliminar((Deportista) tabla.getSelectionModel().getSelectedItem());
-                cargarDeportistas();
-                tabla.refresh();
+                switch (controladorTabla) {
+                    case "deportistas":
+                        DaoDeportista.eliminar((Deportista) tabla.getSelectionModel().getSelectedItem());
+                        cargarDeportistas();
+                        tabla.refresh();
+                        break;
+                    case "eventos":
+                        DaoEvento.eliminar((Evento) tabla.getSelectionModel().getSelectedItem());
+                        cargarEventos();
+                        tabla.refresh();
+                        break;
+                    case "participaciones":
+                        DaoParticipacion.eliminar((Participacion) tabla.getSelectionModel().getSelectedItem());
+                        cargarParticipaciones();
+                        tabla.refresh();
+                        break;
+                }
             }
         } else {
             alerta.setAlertType(Alert.AlertType.ERROR);

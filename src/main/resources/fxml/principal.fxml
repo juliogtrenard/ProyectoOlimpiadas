@@ -10,6 +10,7 @@
        <MenuBar BorderPane.alignment="CENTER">
            <Menu mnemonicParsing="false" text="%label.deportistas">
                <MenuItem fx:id="tDeportistas" mnemonicParsing="false" text="%label.tabla" />
+               <MenuItem fx:id="menAniadirDeportista" mnemonicParsing="false" onAction="#deportistas" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.equipos">
                <MenuItem fx:id="tEquipos" mnemonicParsing="false" text="%label.tabla" />
@@ -61,11 +62,11 @@
          </Label>
            <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" />
            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir">
+               <Button mnemonicParsing="false" onAction="#aniadir" text="%btnAniadir">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin></Button>
-               <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarDeportista" text="%btnEliminar" />
+               <Button mnemonicParsing="false" onAction="#eliminar" text="%btnEliminar" />
            </HBox>
        </VBox>
    </center>
