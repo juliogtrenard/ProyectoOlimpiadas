@@ -1,8 +1,12 @@
 package es.juliogtrenard.proyectoolimpiadas.controladores;
 
 import es.juliogtrenard.proyectoolimpiadas.dao.DaoDeportista;
+import es.juliogtrenard.proyectoolimpiadas.dao.DaoEvento;
+import es.juliogtrenard.proyectoolimpiadas.dao.DaoParticipacion;
 import es.juliogtrenard.proyectoolimpiadas.lenguaje.LenguajeSwitcher;
 import es.juliogtrenard.proyectoolimpiadas.modelos.Deportista;
+import es.juliogtrenard.proyectoolimpiadas.modelos.Evento;
+import es.juliogtrenard.proyectoolimpiadas.modelos.Participacion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,12 +27,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ControladorPrincipal implements Initializable {
-    /**
-     * ComboBox de las tablas
-     */
-    @FXML
-    private ComboBox<String> cbTabla;
-
     /**
      * TextField para filtrar por nombre
      */
@@ -61,6 +58,65 @@ public class ControladorPrincipal implements Initializable {
     private TableView tabla;
 
     /**
+     * Mirar tabla deportistas
+     */
+    @FXML
+    private MenuItem tDeportistas;
+
+    /**
+     * Mirar tabla equipos
+     */
+    @FXML
+    private MenuItem tEquipos;
+
+    /**
+     * Mirar tabla deportes
+     */
+    @FXML
+    private MenuItem tDeportes;
+
+    /**
+     * Mirar tabla olimpiadas
+     */
+    @FXML
+    private MenuItem tOlimpiadas;
+
+    /**
+     * Mirar tabla eventos
+     */
+    @FXML
+    private MenuItem tEventos;
+
+    /**
+     * Mirar tabla participaciones
+     */
+    @FXML
+    private MenuItem tParticipaciones;
+
+    /**
+     * Controlar qué tabla se está visualizando
+     */
+    private String controladorTabla;
+
+    /**
+     * Label del titulo de la tabla
+     */
+    @FXML
+    private Label lblTitulo;
+
+    /**
+     * Boton para añadir
+     */
+    @FXML
+    private Button btnAniadir;
+
+    /**
+     * Boton para eliminar
+     */
+    @FXML
+    private Button btnEliminar;
+
+    /**
      * ResourceBundle de la aplicación
      */
     @FXML
@@ -81,6 +137,8 @@ public class ControladorPrincipal implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resources = resourceBundle;
+        controladorTabla = "deportistas";
+        lblTitulo.setText(resources.getString("titulo.tabla.deportistas"));
 
         if (resources.getLocale().equals(new Locale("es"))) {
             langES.setSelected(true);
@@ -104,6 +162,30 @@ public class ControladorPrincipal implements Initializable {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                 editar(null);
             }
+        });
+
+        tDeportistas.setOnAction(_ -> {
+            controladorTabla = "deportistas";
+            lblTitulo.setText(resources.getString("titulo.tabla.deportistas"));
+            cargarDeportistas();
+            btnAniadir.setVisible(true);
+            btnEliminar.setVisible(true);
+        });
+
+        tEventos.setOnAction(_ -> {
+            controladorTabla = "eventos";
+            lblTitulo.setText(resources.getString("titulo.tabla.eventos"));
+            cargarEventos();
+            btnAniadir.setVisible(false);
+            btnEliminar.setVisible(false);
+        });
+
+        tParticipaciones.setOnAction(_ -> {
+            controladorTabla = "participaciones";
+            lblTitulo.setText(resources.getString("titulo.tabla.participaciones"));
+            cargarParticipaciones();
+            btnAniadir.setVisible(false);
+            btnEliminar.setVisible(false);
         });
 
         cargarDeportistas();
@@ -286,7 +368,6 @@ public class ControladorPrincipal implements Initializable {
      * Agrega en la tabla las columnas del deportista
      */
     private void cargarDeportistas() {
-        // Vaciar tabla
         tabla.getSelectionModel().clearSelection();
         filtroNombre.setText(null);
         filtroNombre.setDisable(false);
@@ -294,7 +375,7 @@ public class ControladorPrincipal implements Initializable {
         filteredData.clear();
         tabla.getItems().clear();
         tabla.getColumns().clear();
-        // Cargar columnas
+
         TableColumn<Deportista, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(new PropertyValueFactory("id_deportista"));
         TableColumn<Deportista, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
@@ -306,10 +387,66 @@ public class ControladorPrincipal implements Initializable {
         TableColumn<Deportista, Integer> colAltura = new TableColumn<>(resources.getString("label.altura"));
         colAltura.setCellValueFactory(new PropertyValueFactory("altura"));
         tabla.getColumns().addAll(colId,colNombre,colSexo,colPeso,colAltura);
-        // Cargar deportistas
+
         ObservableList<Deportista> deportistas = DaoDeportista.cargarListado();
         masterData.setAll(deportistas);
         tabla.setItems(deportistas);
+    }
+
+    /**
+     * Agrega en la tabla las columnas de eventos
+     */
+    private void cargarEventos() {
+        tabla.getSelectionModel().clearSelection();
+        filtroNombre.setText(null);
+        filtroNombre.setDisable(true);
+        masterData.clear();
+        filteredData.clear();
+        tabla.getItems().clear();
+        tabla.getColumns().clear();
+
+        TableColumn<Evento, Integer> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory("id_evento"));
+        TableColumn<Evento, String> colNombre = new TableColumn<>(resources.getString("tabla.evento.nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        TableColumn<Evento, String> colOlimpiada = new TableColumn<>(resources.getString("tabla.evento.olimpiada"));
+        colOlimpiada.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getOlimpiada().getNombre()));
+        TableColumn<Evento, String> colDeporte = new TableColumn<>(resources.getString("tabla.evento.deporte"));
+        colDeporte.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getDeporte().getNombre()));
+        tabla.getColumns().addAll(colId,colNombre,colOlimpiada,colDeporte);
+
+        ObservableList<Evento> eventos = DaoEvento.cargarListado();
+        masterData.setAll(eventos);
+        tabla.setItems(eventos);
+    }
+
+    /**
+     * Agrega en la tabla las columnas de participaciones
+     */
+    private void cargarParticipaciones() {
+        tabla.getSelectionModel().clearSelection();
+        filtroNombre.setText(null);
+        filtroNombre.setDisable(true);
+        masterData.clear();
+        filteredData.clear();
+        tabla.getItems().clear();
+        tabla.getColumns().clear();
+
+        TableColumn<Participacion, String> colDeportista = new TableColumn<>(resources.getString("tabla.participacion.deportista"));
+        colDeportista.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getDeportista().getNombre()));
+        TableColumn<Participacion, String> colEvento = new TableColumn<>(resources.getString("tabla.participacion.evento"));
+        colEvento.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getEvento().getNombre()));
+        TableColumn<Participacion, String> colEquipo = new TableColumn<>(resources.getString("tabla.participacion.equipo"));
+        colEquipo.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getEquipo().getNombre()));
+        TableColumn<Participacion, Integer> colEdad = new TableColumn<>(resources.getString("tabla.participacion.edad"));
+        colEdad.setCellValueFactory(new PropertyValueFactory("edad"));
+        TableColumn<Participacion, String> colMedalla = new TableColumn<>(resources.getString("tabla.participacion.medalla"));
+        colMedalla.setCellValueFactory(new PropertyValueFactory("medalla"));
+        tabla.getColumns().addAll(colDeportista,colEvento,colEquipo,colEdad,colMedalla);
+
+        ObservableList<Participacion> participaciones = DaoParticipacion.cargarListado();
+        masterData.addAll(participaciones);
+        tabla.setItems(participaciones);
     }
 
     /**

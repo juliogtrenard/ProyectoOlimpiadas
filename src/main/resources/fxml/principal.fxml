@@ -8,20 +8,28 @@
 <BorderPane maxHeight="700" maxWidth="900" minHeight="500" minWidth="700" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.juliogtrenard.proyectoolimpiadas.controladores.ControladorPrincipal">
    <top>
        <MenuBar BorderPane.alignment="CENTER">
+           <Menu mnemonicParsing="false" text="%label.deportistas">
+               <MenuItem fx:id="tDeportistas" mnemonicParsing="false" text="%label.tabla" />
+           </Menu>
            <Menu mnemonicParsing="false" text="%label.equipos">
+               <MenuItem fx:id="tEquipos" mnemonicParsing="false" text="%label.tabla" />
                <MenuItem fx:id="menAniadirEquipo" mnemonicParsing="false" onAction="#equipos" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.deportes">
+               <MenuItem fx:id="tDeportes" mnemonicParsing="false" text="%label.tabla" />
                <MenuItem fx:id="menAniadirDeporte" mnemonicParsing="false" onAction="#deportes" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.olimpiadas">
+               <MenuItem fx:id="tOlimpiadas" mnemonicParsing="false" text="%label.tabla" />
                <MenuItem fx:id="menAniadirOlimpiada" mnemonicParsing="false" onAction="#olimpiadas" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.eventos">
+               <MenuItem fx:id="tEventos" mnemonicParsing="false" text="%label.tabla" />
                <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" onAction="#eventos" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.participaciones">
-               <MenuItem fx:id="menAniadirParticipacion" mnemonicParsing="false" onAction="#participaciones" text="%label.opciones"/>
+               <MenuItem fx:id="tParticipaciones" mnemonicParsing="false" text="%label.tabla" />
+               <MenuItem fx:id="menAniadirParticipacion" mnemonicParsing="false" onAction="#participaciones" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%app.ayuda">
                <Menu mnemonicParsing="false" text="%app.lenguaje">
@@ -46,18 +54,18 @@
               </font>
            </Label>
            <TextField fx:id="filtroNombre" alignment="CENTER" promptText="%filtrar" />
-         <Label text="%deportistas">
+         <Label fx:id="lblTitulo" text="%titulo.tabla.deportistas">
             <font>
                <Font size="16.0" />
             </font>
          </Label>
            <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" />
            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <Button mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir">
+               <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#aniadirDeportista" text="%btnAniadir">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin></Button>
-               <Button mnemonicParsing="false" onAction="#eliminarDeportista" text="%btnEliminar" />
+               <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarDeportista" text="%btnEliminar" />
            </HBox>
        </VBox>
    </center>
