@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.juliogtrenard.proyectoolimpiadas.controladores.ControladorDeporte">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <ComboBox fx:id="cbDeporte" prefWidth="150.0" />
+    <GridPane>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <Label text="%label.nombre" GridPane.halignment="RIGHT">
+            <GridPane.margin>
+                <Insets />
+            </GridPane.margin>
+            <padding>
+                <Insets right="5.0" />
+            </padding>
+        </Label>
+        <TextField fx:id="txtNombre" GridPane.columnIndex="1" />
+    </GridPane>
+    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="50.0">
+        <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" text="%label.guardar" />
+        <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" text="%label.btnEliminar" />
+        <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" text="%label.cancelar" />
+    </HBox>
+</VBox>

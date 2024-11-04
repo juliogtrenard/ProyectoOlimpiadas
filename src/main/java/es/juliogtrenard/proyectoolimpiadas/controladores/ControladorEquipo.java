@@ -68,6 +68,7 @@ public class ControladorEquipo implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resources = resourceBundle;
         this.equipo = null;
+        btnEliminar.setDisable(true);
         crear = new Equipo();
         crear.setId_equipo(0);
         crear.setNombre(resources.getString("cb.nuevo"));

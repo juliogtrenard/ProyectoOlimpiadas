@@ -134,6 +134,30 @@ public class ControladorPrincipal implements Initializable {
     }
 
     /**
+     * Abre la ventana de deportes
+     *
+     * @param event
+     */
+    @FXML
+    void deportes(ActionEvent event) {
+        try {
+            Window ventana = tabla.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/deporte.fxml"),resources);
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle(resources.getString("app.nombre"));
+            stage.initOwner(ventana);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            alerta(resources.getString("error.ventana"));
+        }
+    }
+
+    /**
      * Añadir un deportista
      * @param actionEvent El evento de la acción
      */
