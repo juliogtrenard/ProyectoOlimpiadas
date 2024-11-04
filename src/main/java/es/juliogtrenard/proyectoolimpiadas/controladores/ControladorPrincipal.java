@@ -143,7 +143,7 @@ public class ControladorPrincipal implements Initializable {
         filtroNombre.setOnKeyTyped(keyEvent -> filtrar());
 
         tabla.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && controladorTabla.equals("deportistas")) {
                 editar(null);
             }
         });
