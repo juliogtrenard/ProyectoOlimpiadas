@@ -18,7 +18,7 @@
                <MenuItem fx:id="menAniadirOlimpiada" mnemonicParsing="false" onAction="#olimpiadas" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%label.eventos">
-               <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" text="%label.opciones" />
+               <MenuItem fx:id="menAniadirEvento" mnemonicParsing="false" onAction="#eventos" text="%label.opciones" />
            </Menu>
            <Menu mnemonicParsing="false" text="%app.ayuda">
                <Menu mnemonicParsing="false" text="%app.lenguaje">

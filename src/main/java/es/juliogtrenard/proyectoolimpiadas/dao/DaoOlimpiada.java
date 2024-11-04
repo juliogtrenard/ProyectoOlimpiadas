@@ -159,4 +159,35 @@ public class DaoOlimpiada {
             return false;
         }
     }
+
+    /**
+     * Busca una olimpiada por su id
+     *
+     * @param id ID de la olimpiada
+     * @return olimpiada o null
+     */
+    public static Olimpiada getOlimpiada(int id) {
+        DBConnect connection;
+        Olimpiada olimpiada = null;
+        try {
+            connection = new DBConnect();
+            String consulta = "SELECT id_olimpiada,nombre,anio,temporada,ciudad FROM Olimpiada WHERE id_olimpiada = ?";
+            PreparedStatement pstmt = connection.getConnection().prepareStatement(consulta);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id_olimpiada = rs.getInt("id_olimpiada");
+                String nombre = rs.getString("nombre");
+                int anio = rs.getInt("anio");
+                String temporada = rs.getString("temporada");
+                String ciudad = rs.getString("ciudad");
+                olimpiada = new Olimpiada(id_olimpiada,nombre,anio,temporada,ciudad);
+            }
+            rs.close();
+            connection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return olimpiada;
+    }
 }

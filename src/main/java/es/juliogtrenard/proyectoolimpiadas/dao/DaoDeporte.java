@@ -150,4 +150,32 @@ public class DaoDeporte {
             return false;
         }
     }
+
+    /**
+     * Busca un deporte por su id
+     *
+     * @param id ID del deporte
+     * @return deporte o null
+     */
+    public static Deporte getDeporte(int id) {
+        DBConnect connection;
+        Deporte deporte = null;
+        try {
+            connection = new DBConnect();
+            String consulta = "SELECT id_deporte,nombre FROM Deporte WHERE id_deporte = ?";
+            PreparedStatement pstmt = connection.getConnection().prepareStatement(consulta);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id_deporte = rs.getInt("id_deporte");
+                String nombre = rs.getString("nombre");
+                deporte = new Deporte(id_deporte,nombre);
+            }
+            rs.close();
+            connection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return deporte;
+    }
 }
