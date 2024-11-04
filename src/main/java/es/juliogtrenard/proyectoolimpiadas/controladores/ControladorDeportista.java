@@ -98,8 +98,8 @@ public class ControladorDeportista implements Initializable {
     /**
      * Función que se ejecuta cuando se inicia la ventana
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle Recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -131,7 +131,7 @@ public class ControladorDeportista implements Initializable {
     /**
      * Cierra la ventana
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void cancelar(ActionEvent event) {
@@ -140,49 +140,68 @@ public class ControladorDeportista implements Initializable {
     }
 
     /**
-     * Guarda los datos del deportista
+     * Guarda los datos del deportista.
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void guardar(ActionEvent event) {
         String error = validar();
-
         if (!error.isEmpty()) {
             alerta(error);
+            return;
+        }
+
+        Deportista deportistaNuevo = crearDeportista();
+
+        if (this.deportista == null) {
+            procesarNuevo(deportistaNuevo);
         } else {
-            Deportista deportistaNuevo = new Deportista();
-            deportistaNuevo.setNombre(txtNombre.getText());
+            procesarExistente(deportistaNuevo);
+        }
+    }
 
-            if (rbMujer.isSelected()) {
-                deportistaNuevo.setSexo(deportistaNuevo.getSexCategory('F'));
-            } else {
-                deportistaNuevo.setSexo(deportistaNuevo.getSexCategory('M'));
-            }
+    /**
+     * Crea un nuevo Deportista con los datos actuales de la ventana
+     *
+     * @return Deportista nuevo
+     */
+    private Deportista crearDeportista() {
+        Deportista deportistaNuevo = new Deportista();
+        deportistaNuevo.setNombre(txtNombre.getText());
+        deportistaNuevo.setSexo(rbMujer.isSelected() ? deportistaNuevo.getSexCategory('F') : deportistaNuevo.getSexCategory('M'));
+        deportistaNuevo.setPeso(Integer.parseInt(txtPeso.getText()));
+        deportistaNuevo.setAltura(Integer.parseInt(txtAltura.getText()));
+        deportistaNuevo.setFoto(this.imagen);
+        return deportistaNuevo;
+    }
 
-            deportistaNuevo.setPeso(Integer.parseInt(txtPeso.getText()));
-            deportistaNuevo.setAltura(Integer.parseInt(txtAltura.getText()));
-            deportistaNuevo.setFoto(this.imagen);
+    /**
+     * Procesa el nuevo deportista y lo inserta en la base de datos.
+     *
+     * @param deportistaNuevo Deportista nuevo a insertar
+     */
+    private void procesarNuevo(Deportista deportistaNuevo) {
+        int id = DaoDeportista.insertar(deportistaNuevo);
+        if (id == -1) {
+            alerta(resources.getString("guardar.deportista.error"));
+        } else {
+            confirmacion(resources.getString("guardar.deportista"));
+            cancelar(null);
+        }
+    }
 
-            if (this.deportista == null) {
-                int id = DaoDeportista.insertar(deportistaNuevo);
-
-                if (id == -1) {
-                    alerta(resources.getString("guardar.deportista.error"));
-                } else {
-                    confirmacion(resources.getString("guardar.deportista"));
-                    Stage stage = (Stage)txtNombre.getScene().getWindow();
-                    stage.close();
-                }
-            } else {
-                if (DaoDeportista.modificar(this.deportista,deportistaNuevo)) {
-                    confirmacion(resources.getString("actualizar.deportista"));
-                    Stage stage = (Stage)txtNombre.getScene().getWindow();
-                    stage.close();
-                } else {
-                    alerta(resources.getString("guardar.deportista.error"));
-                }
-            }
+    /**
+     * Procesa el deportista existente y lo modifica en la base de datos.
+     *
+     * @param deportistaNuevo Deportista nuevo a modificar
+     */
+    private void procesarExistente(Deportista deportistaNuevo) {
+        if (DaoDeportista.modificar(this.deportista, deportistaNuevo)) {
+            confirmacion(resources.getString("actualizar.deportista"));
+            cancelar(null);
+        } else {
+            alerta(resources.getString("guardar.deportista.error"));
         }
     }
 
@@ -220,7 +239,7 @@ public class ControladorDeportista implements Initializable {
     /**
      * Abre un FileChooser para seleccionar una imagen
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void seleccionImagen(ActionEvent event) {

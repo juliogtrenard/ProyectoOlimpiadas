@@ -68,8 +68,8 @@ public class ControladorParticipacion implements Initializable {
     /**
      * Función que se ejecuta cuando se inicia la ventana
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle Recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

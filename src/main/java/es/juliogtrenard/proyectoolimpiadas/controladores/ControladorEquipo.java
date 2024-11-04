@@ -61,8 +61,8 @@ public class ControladorEquipo implements Initializable {
     /**
      * Cuando se inicia la ventana
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle Recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,9 +90,9 @@ public class ControladorEquipo implements Initializable {
     /**
      * Listener del cambio del ComboBox
      *
-     * @param observable
-     * @param oldValue
-     * @param newValue
+     * @param observable observable
+     * @param oldValue valor antiguo
+     * @param newValue valor nuevo
      */
     public void cambioEquipo(ObservableValue<? extends Equipo> observable, Equipo oldValue, Equipo newValue) {
         if (newValue != null) {
@@ -113,54 +113,91 @@ public class ControladorEquipo implements Initializable {
     }
 
     /**
-     * Valida y procesa los datos
+     * Guarda el equipo en la base de datos
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void guardar(ActionEvent event) {
-        String error = "";
-        if (txtNombre.getText().isEmpty()) {
-            error = resources.getString("validar.equipo.nombre") + "\n";
-        }
-        if (txtIniciales.getText().isEmpty()) {
-            error +=  resources.getString("validar.equipo.ini") + "\n";
-        } else {
-            if (txtIniciales.getText().length() > 3) {
-                error +=  resources.getString("validar.equipo.ini.num") +  "\n";
-            }
-        }
+        String error = validarDatos();
         if (!error.isEmpty()) {
             alerta(error);
+            return;
+        }
+
+        Equipo nuevo = crearEquipo();
+
+        if (this.equipo == null) {
+            procesarNuevo(nuevo);
         } else {
-            Equipo nuevo = new Equipo();
-            nuevo.setNombre(txtNombre.getText());
-            nuevo.setIniciales(txtIniciales.getText());
+            procesarExistente(nuevo);
+        }
+    }
 
-            if (this.equipo == null) {
-                int id = DaoEquipo.insertar(nuevo);
+    /**
+     * Valida los datos del equipo
+     *
+     * @return String con los errores encontrados
+     */
+    private String validarDatos() {
+        StringBuilder error = new StringBuilder();
+        if (txtNombre.getText().isEmpty()) {
+            error.append(resources.getString("validar.equipo.nombre")).append("\n");
+        }
+        if (txtIniciales.getText().isEmpty()) {
+            error.append(resources.getString("validar.equipo.ini")).append("\n");
+        } else if (txtIniciales.getText().length() > 3) {
+            error.append(resources.getString("validar.equipo.ini.num")).append("\n");
+        }
+        return error.toString();
+    }
 
-                if (id == -1) {
-                    alerta(resources.getString("guardar.error"));
-                } else {
-                    confirmacion(resources.getString("guardar.equipo"));
-                    cargarEquipos();
-                }
-            } else {
-                if (DaoEquipo.modificar(equipo, nuevo)) {
-                    confirmacion(resources.getString("actualizar.equipo"));
-                    cargarEquipos();
-                } else {
-                    alerta(resources.getString("guardar.error"));
-                }
-            }
+    /**
+     * Crea un nuevo equipo con los datos del formulario
+     *
+     * @return El nuevo equipo
+     */
+    private Equipo crearEquipo() {
+        Equipo nuevo = new Equipo();
+        nuevo.setNombre(txtNombre.getText());
+        nuevo.setIniciales(txtIniciales.getText());
+        return nuevo;
+    }
+
+
+    /**
+     * Procesa el nuevo equipo a guardar
+     *
+     * @param nuevo El nuevo equipo a guardar.
+     */
+    private void procesarNuevo(Equipo nuevo) {
+        int id = DaoEquipo.insertar(nuevo);
+        if (id == -1) {
+            alerta(resources.getString("guardar.error"));
+        } else {
+            confirmacion(resources.getString("guardar.equipo"));
+            cargarEquipos();
+        }
+    }
+
+    /**
+     * Procesa un equipo existente y actualiza sus datos en la base de datos.
+     *
+     * @param nuevo El equipo con los nuevos datos a actualizar.
+     */
+    private void procesarExistente(Equipo nuevo) {
+        if (DaoEquipo.modificar(equipo, nuevo)) {
+            confirmacion(resources.getString("actualizar.equipo"));
+            cargarEquipos();
+        } else {
+            alerta(resources.getString("guardar.error"));
         }
     }
 
     /**
      * Elimina un equipo
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void eliminar(ActionEvent event) {
@@ -184,7 +221,7 @@ public class ControladorEquipo implements Initializable {
     /**
      * Cierra la ventana
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void cancelar(ActionEvent event) {

@@ -79,8 +79,8 @@ public class ControladorOlimpiada implements Initializable {
     /**
      * Cuando se inicia la ventana
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle Recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,9 +108,9 @@ public class ControladorOlimpiada implements Initializable {
     /**
      * Listener del cambio del ComboBox
      *
-     * @param observable
-     * @param oldValue
-     * @param newValue
+     * @param observable observable
+     * @param oldValue valor antiguo
+     * @param newValue valor nuevo
      */
     public void cambioOlimpiada(ObservableValue<? extends Olimpiada> observable, Olimpiada oldValue, Olimpiada newValue) {
         if (newValue != null) {
@@ -144,7 +144,7 @@ public class ControladorOlimpiada implements Initializable {
     /**
      * Cierra la ventana
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void cancelar(ActionEvent event) {
@@ -155,46 +155,72 @@ public class ControladorOlimpiada implements Initializable {
     /**
      * Valida y procesa los datos
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void guardar(ActionEvent event) {
         String error = validar();
         if (!error.isEmpty()) {
             alerta(error);
+            return;
+        }
+
+        Olimpiada nuevo = crearOlimpiada();
+
+        if (this.olimpiada == null) {
+            procesarNuevo(nuevo);
         } else {
-            Olimpiada nuevo = new Olimpiada();
-            nuevo.setNombre(txtNombre.getText());
-            nuevo.setAnio(Integer.parseInt(txtAnio.getText()));
-            if (rbInvierno.isSelected()) {
-                nuevo.setTemporada(nuevo.getSeasonCategory("Winter"));
-            } else {
-                nuevo.setTemporada(nuevo.getSeasonCategory("Summer"));
-            }
-            nuevo.setCiudad(txtCiudad.getText());
-            if (this.olimpiada == null) {
-                int id = DaoOlimpiada.insertar(nuevo);
-                if (id == -1) {
-                    alerta(resources.getString("guardar.error"));
-                } else {
-                    confirmacion(resources.getString("guardar.olimpiada"));
-                    cargarOlimpiadas();
-                }
-            } else {
-                if (DaoOlimpiada.modificar(this.olimpiada, nuevo)) {
-                    confirmacion(resources.getString("actualizar.olimpiada"));
-                    cargarOlimpiadas();
-                } else {
-                    alerta(resources.getString("guardar.error"));
-                }
-            }
+            procesarExistente(nuevo);
+        }
+    }
+
+    /**
+     * Crea una olimpiada
+     *
+     * @return olimpiada Olimpiada nueva
+     */
+    private Olimpiada crearOlimpiada() {
+        Olimpiada nuevo = new Olimpiada();
+        nuevo.setNombre(txtNombre.getText());
+        nuevo.setAnio(Integer.parseInt(txtAnio.getText()));
+        nuevo.setTemporada(rbInvierno.isSelected() ? nuevo.getSeasonCategory("Winter") : nuevo.getSeasonCategory("Summer"));
+        nuevo.setCiudad(txtCiudad.getText());
+        return nuevo;
+    }
+
+    /**
+     * Si es una nueva olimpiada
+     *
+     * @param nuevo Nueva olimpiada
+     */
+    private void procesarNuevo(Olimpiada nuevo) {
+        int id = DaoOlimpiada.insertar(nuevo);
+        if (id == -1) {
+            alerta(resources.getString("guardar.error"));
+        } else {
+            confirmacion(resources.getString("guardar.olimpiada"));
+            cargarOlimpiadas();
+        }
+    }
+
+    /**
+     * Si es una olimpiada existente
+     *
+     * @param nuevo Nueva olimpiada
+     */
+    private void procesarExistente(Olimpiada nuevo) {
+        if (DaoOlimpiada.modificar(this.olimpiada, nuevo)) {
+            confirmacion(resources.getString("actualizar.olimpiada"));
+            cargarOlimpiadas();
+        } else {
+            alerta(resources.getString("guardar.error"));
         }
     }
 
     /**
      * Elimina una olimpiada
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void eliminar(ActionEvent event) {

@@ -54,8 +54,8 @@ public class ControladorEvento implements Initializable {
     /**
      * Cuando se inicia la ventana
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle Recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,47 +90,85 @@ public class ControladorEvento implements Initializable {
     }
 
     /**
-     * Valida y procesa los datos
+     * Valida y procesa los datos del evento
      *
-     * @param event Evento que activa el metodo
+     * @param event El evento
      */
     @FXML
     void guardar(ActionEvent event) {
-        String error = "";
-        if (txtNombre.getText().isEmpty()) {
-            error = resources.getString("validar.evento.nombre") + "\n";
-        }
-        if (lstOlimpiada.getSelectionModel().getSelectedItem() == null) {
-            error += resources.getString("validar.evento.olimpiada") + "\n";
-        }
-        if (lstDeporte.getSelectionModel().getSelectedItem() == null) {
-            error += resources.getString("validar.evento.deporte") + "\n";
-        }
+        String error = validarDatos();
         if (!error.isEmpty()) {
             alerta(error);
+            return;
+        }
+
+        Evento nuevo = crearEvento();
+
+        if (this.evento == null) {
+            procesarNuevo(nuevo);
         } else {
-            Evento nuevo = new Evento();
-            nuevo.setNombre(txtNombre.getText());
-            nuevo.setOlimpiada(lstOlimpiada.getSelectionModel().getSelectedItem());
-            nuevo.setDeporte(lstDeporte.getSelectionModel().getSelectedItem());
-            if (this.evento == null) {
-                int id = DaoEvento.insertar(nuevo);
-                if (id == -1) {
-                    alerta(resources.getString("guardar.error"));
-                } else {
-                    confirmacion(resources.getString("guardar.evento"));
-                    Stage stage = (Stage)txtNombre.getScene().getWindow();
-                    stage.close();
-                }
-            } else {
-                if (DaoEvento.modificar(evento, nuevo)) {
-                    confirmacion(resources.getString("actualizar.evento"));
-                    Stage stage = (Stage)txtNombre.getScene().getWindow();
-                    stage.close();
-                } else {
-                    alerta(resources.getString("guardar.error"));
-                }
-            }
+            procesarExistente(nuevo);
+        }
+    }
+
+    /**
+     * Valida los datos del evento
+     *
+     * @return String con los errores encontrados
+     */
+    private String validarDatos() {
+        StringBuilder error = new StringBuilder();
+        if (txtNombre.getText().isEmpty()) {
+            error.append(resources.getString("validar.evento.nombre")).append("\n");
+        }
+        if (lstOlimpiada.getSelectionModel().getSelectedItem() == null) {
+            error.append(resources.getString("validar.evento.olimpiada")).append("\n");
+        }
+        if (lstDeporte.getSelectionModel().getSelectedItem() == null) {
+            error.append(resources.getString("validar.evento.deporte")).append("\n");
+        }
+        return error.toString();
+    }
+
+    /**
+     * Crea un nuevo evento a partir de los datos de la interfaz gráfica
+     *
+     * @return Evento con los datos del evento
+     */
+    private Evento crearEvento() {
+        Evento nuevo = new Evento();
+        nuevo.setNombre(txtNombre.getText());
+        nuevo.setOlimpiada(lstOlimpiada.getSelectionModel().getSelectedItem());
+        nuevo.setDeporte(lstDeporte.getSelectionModel().getSelectedItem());
+        return nuevo;
+    }
+
+    /**
+     * Procesa el evento nuevo y lo inserta en la base de datos, mostrando un mensaje de confirmacion o error
+     *
+     * @param nuevo Evento a insertar
+     */
+    private void procesarNuevo(Evento nuevo) {
+        int id = DaoEvento.insertar(nuevo);
+        if (id == -1) {
+            alerta(resources.getString("guardar.error"));
+        } else {
+            confirmacion(resources.getString("guardar.evento"));
+            cancelar(null);
+        }
+    }
+
+    /**
+     * Procesa el evento existente y lo actualiza en la base de datos, mostrando un mensaje de confirmacion o error
+     *
+     * @param nuevo Evento con los datos actualizados
+     */
+    private void procesarExistente(Evento nuevo) {
+        if (DaoEvento.modificar(evento, nuevo)) {
+            confirmacion(resources.getString("actualizar.evento"));
+            cancelar(null);
+        } else {
+            alerta(resources.getString("guardar.error"));
         }
     }
 

@@ -55,8 +55,8 @@ public class ControladorDeporte implements Initializable {
     /**
      * Se ejecuta cuando se inicia la ventana
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle Recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,9 +84,9 @@ public class ControladorDeporte implements Initializable {
     /**
      * Listener del cambio del ComboBox
      *
-     * @param observable
-     * @param oldValue
-     * @param newValue
+     * @param observable observable
+     * @param oldValue valor antiguo
+     * @param newValue valor nuevo
      */
     public void cambioDeporte(ObservableValue<? extends Deporte> observable, Deporte oldValue, Deporte newValue) {
         if (newValue != null) {
@@ -107,7 +107,7 @@ public class ControladorDeporte implements Initializable {
     /**
      * Cierra la ventana
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void cancelar(ActionEvent event) {
@@ -118,7 +118,7 @@ public class ControladorDeporte implements Initializable {
     /**
      * Valida y procesa los datos
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void guardar(ActionEvent event) {
@@ -149,7 +149,7 @@ public class ControladorDeporte implements Initializable {
     /**
      * Elimina un deporte
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void eliminar(ActionEvent event) {

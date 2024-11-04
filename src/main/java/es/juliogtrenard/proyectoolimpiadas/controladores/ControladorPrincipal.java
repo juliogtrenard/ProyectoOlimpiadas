@@ -115,8 +115,8 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Se ejecuta cuando se inicia la aplicación
      *
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle recursos
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -199,15 +199,15 @@ public class ControladorPrincipal implements Initializable {
         tabla.getColumns().clear();
 
         TableColumn<Olimpiada, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory("id_olimpiada"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("id_olimpiada"));
         TableColumn<Olimpiada, String> colNombre = new TableColumn<>(resources.getString("tabla.olimpiada.nombre"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         TableColumn<Olimpiada, Integer> colAnio = new TableColumn<>(resources.getString("tabla.olimpiada.anio"));
-        colAnio.setCellValueFactory(new PropertyValueFactory("anio"));
+        colAnio.setCellValueFactory(new PropertyValueFactory<>("anio"));
         TableColumn<Olimpiada, String> colTemporada = new TableColumn<>(resources.getString("tabla.olimpiada.temporada"));
-        colTemporada.setCellValueFactory(new PropertyValueFactory("temporada"));
+        colTemporada.setCellValueFactory(new PropertyValueFactory<>("temporada"));
         TableColumn<Olimpiada, String> colCiudad = new TableColumn<>(resources.getString("tabla.olimpiada.ciudad"));
-        colCiudad.setCellValueFactory(new PropertyValueFactory("ciudad"));
+        colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
         tabla.getColumns().addAll(colId,colNombre,colAnio,colTemporada,colCiudad);
 
         ObservableList<Olimpiada> olimpiadas = DaoOlimpiada.cargarListado();
@@ -227,9 +227,9 @@ public class ControladorPrincipal implements Initializable {
         tabla.getColumns().clear();
 
         TableColumn<Deporte, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory("id_deporte"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("id_deporte"));
         TableColumn<Deporte, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tabla.getColumns().addAll(colId,colNombre);
 
         ObservableList<Deporte> deportes = DaoDeporte.cargarListado();
@@ -249,11 +249,11 @@ public class ControladorPrincipal implements Initializable {
         tabla.getColumns().clear();
 
         TableColumn<Equipo, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory("id_equipo"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("id_equipo"));
         TableColumn<Equipo, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         TableColumn<Equipo, String> colIniciales = new TableColumn<>(resources.getString("label.iniciales"));
-        colIniciales.setCellValueFactory(new PropertyValueFactory("iniciales"));
+        colIniciales.setCellValueFactory(new PropertyValueFactory<>("iniciales"));
         tabla.getColumns().addAll(colId,colNombre,colIniciales);
 
         ObservableList<Equipo> equipos = DaoEquipo.cargarListado();
@@ -264,7 +264,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana de deportistas
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void deportistas(ActionEvent event) {
@@ -291,7 +291,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana de equipos
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void equipos(ActionEvent event) {
@@ -315,7 +315,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana de deportes
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void deportes(ActionEvent event) {
@@ -339,7 +339,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana de olimpiadas
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void olimpiadas(ActionEvent event) {
@@ -363,7 +363,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana de Eventos
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void eventos(ActionEvent event) {
@@ -387,7 +387,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana de Eventos
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void participaciones(ActionEvent event) {
@@ -511,15 +511,15 @@ public class ControladorPrincipal implements Initializable {
         tabla.getColumns().clear();
 
         TableColumn<Deportista, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory("id_deportista"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("id_deportista"));
         TableColumn<Deportista, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         TableColumn<Deportista, Deportista.SexCategory> colSexo = new TableColumn<>(resources.getString("label.sexo"));
-        colSexo.setCellValueFactory(new PropertyValueFactory("sexo"));
+        colSexo.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         TableColumn<Deportista, Integer> colPeso = new TableColumn<>(resources.getString("label.peso"));
-        colPeso.setCellValueFactory(new PropertyValueFactory("peso"));
+        colPeso.setCellValueFactory(new PropertyValueFactory<>("peso"));
         TableColumn<Deportista, Integer> colAltura = new TableColumn<>(resources.getString("label.altura"));
-        colAltura.setCellValueFactory(new PropertyValueFactory("altura"));
+        colAltura.setCellValueFactory(new PropertyValueFactory<>("altura"));
         tabla.getColumns().addAll(colId,colNombre,colSexo,colPeso,colAltura);
 
         ObservableList<Deportista> deportistas = DaoDeportista.cargarListado();
@@ -539,9 +539,9 @@ public class ControladorPrincipal implements Initializable {
         tabla.getColumns().clear();
 
         TableColumn<Evento, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory("id_evento"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("id_evento"));
         TableColumn<Evento, String> colNombre = new TableColumn<>(resources.getString("tabla.evento.nombre"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         TableColumn<Evento, String> colOlimpiada = new TableColumn<>(resources.getString("tabla.evento.olimpiada"));
         colOlimpiada.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getOlimpiada().getNombre()));
         TableColumn<Evento, String> colDeporte = new TableColumn<>(resources.getString("tabla.evento.deporte"));
@@ -572,9 +572,9 @@ public class ControladorPrincipal implements Initializable {
         TableColumn<Participacion, String> colEquipo = new TableColumn<>(resources.getString("tabla.participacion.equipo"));
         colEquipo.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getEquipo().getNombre()));
         TableColumn<Participacion, Integer> colEdad = new TableColumn<>(resources.getString("tabla.participacion.edad"));
-        colEdad.setCellValueFactory(new PropertyValueFactory("edad"));
+        colEdad.setCellValueFactory(new PropertyValueFactory<>("edad"));
         TableColumn<Participacion, String> colMedalla = new TableColumn<>(resources.getString("tabla.participacion.medalla"));
-        colMedalla.setCellValueFactory(new PropertyValueFactory("medalla"));
+        colMedalla.setCellValueFactory(new PropertyValueFactory<>("medalla"));
         tabla.getColumns().addAll(colDeportista,colEvento,colEquipo,colEdad,colMedalla);
 
         ObservableList<Participacion> participaciones = DaoParticipacion.cargarListado();
@@ -585,7 +585,7 @@ public class ControladorPrincipal implements Initializable {
     /**
      * Abre la ventana para la edición del deportista cuando se hace doble clic
      *
-     * @param event
+     * @param event El evento
      */
     @FXML
     void editar(ActionEvent event) {
@@ -634,58 +634,85 @@ public class ControladorPrincipal implements Initializable {
         }
     }
 
+    /**
+     * Determina el filtro de la tabla
+     *
+     * @param valor El texto escrito
+     */
     private void elegirFiltro(String valor) {
-        switch(controladorTabla) {
-            case "deportistas":
-                for (Object obj : masterData) {
-                    Deportista deportista = (Deportista) obj;
-                    String nombre = deportista.getNombre();
-                    nombre = nombre.toLowerCase();
-                    if (nombre.contains(valor)) {
-                        filteredData.add(deportista);
-                    }
-                }
-                break;
-            case "eventos":
-                for (Object obj : masterData) {
-                    Evento evento = (Evento) obj;
-                    String nombre = evento.getNombre();
-                    nombre = nombre.toLowerCase();
-                    if (nombre.contains(valor)) {
-                        filteredData.add(evento);
-                    }
-                }
-                break;
-            case "olimpiadas":
-                for (Object obj : masterData) {
-                    Olimpiada olimpiada = (Olimpiada) obj;
-                    String nombre = olimpiada.getNombre();
-                    nombre = nombre.toLowerCase();
-                    if (nombre.contains(valor)) {
-                        filteredData.add(olimpiada);
-                    }
-                }
-                break;
-            case "deportes":
-                for (Object obj : masterData) {
-                    Deporte deporte = (Deporte) obj;
-                    String nombre = deporte.getNombre();
-                    nombre = nombre.toLowerCase();
-                    if (nombre.contains(valor)) {
-                        filteredData.add(deporte);
-                    }
-                }
-                break;
-            case "equipos":
-                for (Object obj : masterData) {
-                    Equipo equipo = (Equipo) obj;
-                    String nombre = equipo.getNombre();
-                    nombre = nombre.toLowerCase();
-                    if (nombre.contains(valor)) {
-                        filteredData.add(equipo);
-                    }
-                }
-                break;
+        String valorBuscado = valor.toLowerCase();
+        for (Object obj : masterData) {
+            if (obj instanceof Deportista) {
+                filtrarDeportista((Deportista) obj, valorBuscado);
+            } else if (obj instanceof Evento) {
+                filtrarEvento((Evento) obj, valorBuscado);
+            } else if (obj instanceof Olimpiada) {
+                filtrarOlimpiada((Olimpiada) obj, valorBuscado);
+            } else if (obj instanceof Deporte) {
+                filtrarDeporte((Deporte) obj, valorBuscado);
+            } else if (obj instanceof Equipo) {
+                filtrarEquipo((Equipo) obj, valorBuscado);
+            }
+        }
+    }
+
+    /**
+     * Filtrar los deportistas
+     *
+     * @param deportista Deportista
+     * @param valor El valor a buscar
+     */
+    private void filtrarDeportista(Deportista deportista, String valor) {
+        if (deportista.getNombre().toLowerCase().contains(valor)) {
+            filteredData.add(deportista);
+        }
+    }
+
+    /**
+     * Filtrar los eventos
+     *
+     * @param evento Evento
+     * @param valor El valor a buscar
+     */
+    private void filtrarEvento(Evento evento, String valor) {
+        if (evento.getNombre().toLowerCase().contains(valor)) {
+            filteredData.add(evento);
+        }
+    }
+
+    /**
+     * Filtrar las olimpiadas
+     *
+     * @param olimpiada Olimpiada
+     * @param valor El valor a buscar
+     */
+    private void filtrarOlimpiada(Olimpiada olimpiada, String valor) {
+        if (olimpiada.getNombre().toLowerCase().contains(valor)) {
+            filteredData.add(olimpiada);
+        }
+    }
+
+    /**
+     * Filtrar los deportes
+     *
+     * @param deporte Deporte
+     * @param valor El valor a buscar
+     */
+    private void filtrarDeporte(Deporte deporte, String valor) {
+        if (deporte.getNombre().toLowerCase().contains(valor)) {
+            filteredData.add(deporte);
+        }
+    }
+
+    /**
+     * Filtrar los equipos
+     *
+     * @param equipo Equipo
+     * @param valor El valor a buscar
+     */
+    private void filtrarEquipo(Equipo equipo, String valor) {
+        if (equipo.getNombre().toLowerCase().contains(valor)) {
+            filteredData.add(equipo);
         }
     }
 
