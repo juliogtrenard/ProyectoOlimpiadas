@@ -210,6 +210,12 @@ public class ControladorPrincipal implements Initializable {
         colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
         tabla.getColumns().addAll(colId,colNombre,colAnio,colTemporada,colCiudad);
 
+        colId.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colNombre.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colAnio.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colTemporada.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colCiudad.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+
         ObservableList<Olimpiada> olimpiadas = DaoOlimpiada.cargarListado();
         masterData.addAll(olimpiadas);
         tabla.setItems(olimpiadas);
@@ -231,6 +237,9 @@ public class ControladorPrincipal implements Initializable {
         TableColumn<Deporte, String> colNombre = new TableColumn<>(resources.getString("label.nombre"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tabla.getColumns().addAll(colId,colNombre);
+
+        colId.prefWidthProperty().bind(tabla.widthProperty().divide(2));
+        colNombre.prefWidthProperty().bind(tabla.widthProperty().divide(2));
 
         ObservableList<Deporte> deportes = DaoDeporte.cargarListado();
         masterData.setAll(deportes);
@@ -255,6 +264,10 @@ public class ControladorPrincipal implements Initializable {
         TableColumn<Equipo, String> colIniciales = new TableColumn<>(resources.getString("label.iniciales"));
         colIniciales.setCellValueFactory(new PropertyValueFactory<>("iniciales"));
         tabla.getColumns().addAll(colId,colNombre,colIniciales);
+
+        colId.prefWidthProperty().bind(tabla.widthProperty().divide(3));
+        colNombre.prefWidthProperty().bind(tabla.widthProperty().divide(3));
+        colIniciales.prefWidthProperty().bind(tabla.widthProperty().divide(3));
 
         ObservableList<Equipo> equipos = DaoEquipo.cargarListado();
         masterData.setAll(equipos);
@@ -522,6 +535,12 @@ public class ControladorPrincipal implements Initializable {
         colAltura.setCellValueFactory(new PropertyValueFactory<>("altura"));
         tabla.getColumns().addAll(colId,colNombre,colSexo,colPeso,colAltura);
 
+        colId.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colNombre.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colSexo.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colPeso.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colAltura.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+
         ObservableList<Deportista> deportistas = DaoDeportista.cargarListado();
         masterData.setAll(deportistas);
         tabla.setItems(deportistas);
@@ -547,6 +566,11 @@ public class ControladorPrincipal implements Initializable {
         TableColumn<Evento, String> colDeporte = new TableColumn<>(resources.getString("tabla.evento.deporte"));
         colDeporte.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getDeporte().getNombre()));
         tabla.getColumns().addAll(colId,colNombre,colOlimpiada,colDeporte);
+
+        colId.prefWidthProperty().bind(tabla.widthProperty().divide(4));
+        colNombre.prefWidthProperty().bind(tabla.widthProperty().divide(4));
+        colOlimpiada.prefWidthProperty().bind(tabla.widthProperty().divide(4));
+        colDeporte.prefWidthProperty().bind(tabla.widthProperty().divide(4));
 
         ObservableList<Evento> eventos = DaoEvento.cargarListado();
         masterData.setAll(eventos);
@@ -576,6 +600,12 @@ public class ControladorPrincipal implements Initializable {
         TableColumn<Participacion, String> colMedalla = new TableColumn<>(resources.getString("tabla.participacion.medalla"));
         colMedalla.setCellValueFactory(new PropertyValueFactory<>("medalla"));
         tabla.getColumns().addAll(colDeportista,colEvento,colEquipo,colEdad,colMedalla);
+
+        colDeportista.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colEvento.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colEquipo.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colEdad.prefWidthProperty().bind(tabla.widthProperty().divide(5));
+        colMedalla.prefWidthProperty().bind(tabla.widthProperty().divide(5));
 
         ObservableList<Participacion> participaciones = DaoParticipacion.cargarListado();
         masterData.addAll(participaciones);
